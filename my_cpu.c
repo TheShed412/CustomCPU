@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "my_cpu.h"
 
-unsigned short alu(unsigned short, unsigned short);
-
 CPU cpu;
 
 int main(int argc, char const *argv[]) {
@@ -12,8 +10,8 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 
-/**/
+/*takes in tbe two registers and does the operation specified*/
 
-unsigned short alu(unsigned short reg_1, unsigned short reg_2){
+unsigned short alu(unsigned short reg_1, unsigned short reg_2, unsigned short opcode){
 
 }

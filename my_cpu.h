@@ -13,4 +13,6 @@ typedef struct {
     unsigned short instructions[1000];      /*ROM for holding instructions. 16-bit instruction set*/
 } ROM;
 
+unsigned short alu(unsigned short, unsigned short, unsigned short);
+
 #endif
