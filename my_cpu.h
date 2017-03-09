@@ -1,5 +1,7 @@
 #ifndef CHIP8
 #define CHIP8
+#define byte unsigned short     /*Because I use it a lot and I'm tired of typing
+                                  all of the words :p*/
 
 typedef struct {
     unsigned short  opcode;             /*the current opcode*/
@@ -13,6 +15,6 @@ typedef struct {
     unsigned short instructions[1000];      /*ROM for holding instructions. 16-bit instruction set*/
 } ROM;
 
-unsigned short alu(unsigned short, unsigned short, unsigned short);
+void alu(unsigned short, unsigned short, unsigned short);
 
 #endif

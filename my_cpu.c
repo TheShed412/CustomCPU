@@ -11,44 +11,45 @@ int main(int argc, char const *argv[]) {
 }
 
 /*
-takes in the two registers and does the operation specified
-returns the result
-won't worry about carry outs or ins
-I might need to edit since there are only two registers.
-I might have it only take one register that we will store
-the result of doing the operation on the two registers.
-Cause that's how the lab went, but this will make it
-easier to reuse in the future.
+Decided to emmulate the alu from my old lab exactly.
 
-I dunno  ¯\_(ツ)_/¯
+Takes three args:
+result_register - the register the result will be put in.
+                  It will just take the array value of the
+                  register.
+
+immediate - if the operation takes an immediate value,
+            this will be that. 0 otherwise.
+
+opcode - what the operation will be
 */
 
-byte alu(byte reg_1, byte reg_2, byte opcode){
+void alu(byte result_register, byte immediate, byte opcode){
 
     switch (opcode) {
         /*Set operation. reg_2 will be an immediate*/
         case 0x0:
-            reg_1 = reg_2;
+            cpu.V[result_register] = immediate;
             break;
 
         /*Add operation*/
         case 0x2:
-            reg_1 += reg_2;
+            cpu.V[result_register] = cpu.V[0]+cpu.V[1];
             break;
 
         /*Subtraction operation*/
         case 0x3:
-            reg_1 -= reg_2;
+            cpu.V[result_register] = cpu.V[0]-cpu.V[1];
             break;
 
         /*or operation*/
         case 0x4:
-            reg_1 = reg_1|reg_2;
+            cpu.V[result_register] = cpu.V[0]|cpu.V[1];
             break;
 
         /*and operation*/
         case 0x5:
-            reg_1 = reg_1&reg_2;
+            cpu.V[result_register] = cpu.V[0]&cpu.V[1];
             break;
 
         /*wtf happened*/
@@ -56,5 +57,4 @@ byte alu(byte reg_1, byte reg_2, byte opcode){
             printf("%s\n", "not supported operation");
     }/*switch*/
 
-    return reg_1;
 }/*alu*/
