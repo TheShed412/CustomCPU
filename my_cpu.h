@@ -15,6 +15,7 @@ typedef struct {
     unsigned short instructions[1000];      /*ROM for holding instructions. 16-bit instruction set*/
 } ROM;
 
-void alu(unsigned short, unsigned short, unsigned short);
+byte alu(unsigned short, unsigned short, unsigned short);
+byte* register_file(byte tick, byte reg_write, byte input);
 
 #endif
