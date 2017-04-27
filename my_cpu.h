@@ -16,6 +16,6 @@ typedef struct {
 } ROM;
 
 byte alu(unsigned short, unsigned short, unsigned short);
-byte* register_file(byte tick, byte reg_write, byte input);
+void register_file(byte tick, byte reg_write, byte input);
 
 #endif
