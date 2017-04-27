@@ -2,9 +2,23 @@
 #include <stdlib.h>
 #include "my_cpu.h"
 
+static void copy_to_rom(word* to_rom, int size);
+
 CPU cpu;
+ROM rom;
 
 int main(int argc, char const *argv[]) {
+	/*PC will just be the index for the ROM*/
+
+	word instructions[] = {
+		0x45,	/*load 69 in to A*/
+		0x801,  /*load 1 in to B*/
+	};
+
+	copy_to_rom(instructions, 2);
+
+	printf("%d\n", rom.instructions[0]);
+	printf("%d\n", rom.instructions[1]);
 
     cpu.opcode = 0x00ff;
 
@@ -25,7 +39,30 @@ immediate - if the operation takes an immediate value,
 opcode - what the operation will be
 */
 
-void alu(byte result_register, byte immediate, byte opcode){
+static void copy_to_rom(word* to_rom, int size)
+{
+	int i;
+	for(i=0; i< size; i++)
+		rom.instructions[i] = to_rom[i];
+}
+
+
+/*
+	This will split the instructions in to the right parts
+	then put it in an array and return it
+*/
+void splitter(word curr_instruct, word* parts)
+{
+	/*
+		TODO: splt the thing into:
+		parts[0]: opcode (bits 15-12)
+		parts[1]: register (bit 11)
+		parts[3]: immediate (bits 7-0)
+	*/
+}/*splitter*/
+
+void alu(word result_register, word immediate, word opcode)
+{
 
     switch (opcode) {
         /*Set operation. reg_2 will be an immediate*/
@@ -60,7 +97,8 @@ void alu(byte result_register, byte immediate, byte opcode){
 
 }/*alu*/
 
-void register_file(byte tick, byte reg_write, byte input){
+void register_file(word tick, word reg_write, word input)
+{
     if(!tick){
         cpu.V[reg_write] = input;
     }/*checks for the down tick ie tick = 0*/

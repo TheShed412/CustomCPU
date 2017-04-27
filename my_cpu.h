@@ -1,6 +1,6 @@
 #ifndef CHIP8
 #define CHIP8
-#define byte unsigned short     /*Because I use it a lot and I'm tired of typing
+#define word unsigned short     /*Because I use it a lot and I'm tired of typing
                                   all of the words :p*/
 
 typedef struct {
@@ -15,7 +15,8 @@ typedef struct {
     unsigned short instructions[1000];      /*ROM for holding instructions. 16-bit instruction set*/
 } ROM;
 
-void alu(unsigned short, unsigned short, unsigned short);
-void register_file(byte tick, byte reg_write, byte input);
+void alu(word, word, word);
+void register_file(word tick, word reg_write, word input);
+void splitter(word, word*);
 
 #endif
