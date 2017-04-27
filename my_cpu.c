@@ -17,9 +17,6 @@ int main(int argc, char const *argv[]) {
 
 	copy_to_rom(instructions, 2);
 
-	printf("%d\n", rom.instructions[0]);
-	printf("%d\n", rom.instructions[1]);
-
     cpu.opcode = 0x00ff;
 
     return 0;
@@ -54,11 +51,19 @@ static void copy_to_rom(word* to_rom, int size)
 void splitter(word curr_instruct, word* parts)
 {
 	/*
-		TODO: splt the thing into:
+		TODO: split the thing into:
 		parts[0]: opcode (bits 15-12)
 		parts[1]: register (bit 11)
-		parts[3]: immediate (bits 7-0)
+		parts[2]: immediate (bits 7-0)
 	*/
+
+	word opcode = curr_instruct & 0xF000;
+	word reg	= curr_instruct & 0x800;
+	word imm 	= curr_instruct & 0xFF;
+
+	parts[0] = opcode;
+	parts[1] = reg;
+	parts[2] = imm;
 }/*splitter*/
 
 void alu(word result_register, word immediate, word opcode)
