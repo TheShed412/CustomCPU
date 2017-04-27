@@ -17,24 +17,22 @@ int main(int argc, char const *argv[]) {
 
 	copy_to_rom(instructions, 2);
 
-    cpu.opcode = 0x00ff;
+	word split_ins[3];
+
+	int i;
+	for(i=0; i<2; i++){
+		splitter(rom.instructions[i], split_ins);
+
+		printf("%d\n", split_ins[1]);
+		alu(split_ins[1], split_ins[2], split_ins[0]);
+	}
+
+	printf("A: %d\n", cpu.V[0]);
+	printf("B: %d\n", cpu.V[1]);
 
     return 0;
 }
 
-/*
-Decided to emmulate the alu from my old lab exactly.
-
-Takes three args:
-result_register - the register the result will be put in.
-                  It will just take the array value of the
-                  register.
-
-immediate - if the operation takes an immediate value,
-            this will be that. 0 otherwise.
-
-opcode - what the operation will be
-*/
 
 static void copy_to_rom(word* to_rom, int size)
 {
@@ -61,11 +59,24 @@ void splitter(word curr_instruct, word* parts)
 	word reg	= curr_instruct & 0x800;
 	word imm 	= curr_instruct & 0xFF;
 
-	parts[0] = opcode;
-	parts[1] = reg;
+	parts[0] = opcode >> 12;
+	parts[1] = reg >> 11;
 	parts[2] = imm;
 }/*splitter*/
 
+/*
+Decided to emmulate the alu from my old lab exactly.
+
+Takes three args:
+result_register - the register the result will be put in.
+                  It will just take the array value of the
+                  register.
+
+immediate - if the operation takes an immediate value,
+            this will be that. 0 otherwise.
+
+opcode - what the operation will be
+*/
 void alu(word result_register, word immediate, word opcode)
 {
 
