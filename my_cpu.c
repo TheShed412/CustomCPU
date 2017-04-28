@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "my_cpu.h"
+#define TEST 3
 
 static void copy_to_rom(word* to_rom, int size);
 
@@ -13,18 +14,17 @@ int main(int argc, char const *argv[]) {
 	word instructions[] = {
 		0x45,	/*load 69 in to A*/
 		0x801,  /*load 1 in to B*/
+		0x2800, /*add what's in A and B, store in B*/
 	};
 
-	copy_to_rom(instructions, 2);
+	copy_to_rom(instructions, TEST);
 
 	word split_ins[3];
 
 	int i;
-	for(i=0; i<2; i++){
+	for(i=0; i<TEST; i++){
 		splitter(rom.instructions[i], split_ins);
-
-		printf("%d\n", split_ins[1]);
-		alu(split_ins[1], split_ins[2], split_ins[0]);
+		alu(0, split_ins[1], split_ins[2], split_ins[0]);
 	}
 
 	printf("A: %d\n", cpu.V[0]);
@@ -77,33 +77,33 @@ immediate - if the operation takes an immediate value,
 
 opcode - what the operation will be
 */
-void alu(word result_register, word immediate, word opcode)
+void alu(word tick, word result_register, word immediate, word opcode)
 {
 
     switch (opcode) {
         /*Set operation. reg_2 will be an immediate*/
         case 0x0:
-            cpu.V[result_register] = immediate;
+			register_file(tick, result_register, immediate);
             break;
 
         /*Add operation*/
         case 0x2:
-            cpu.V[result_register] = cpu.V[0]+cpu.V[1];
+			register_file(tick, result_register, (cpu.V[0]+cpu.V[1]));
             break;
 
         /*Subtraction operation*/
         case 0x3:
-            cpu.V[result_register] = cpu.V[0]-cpu.V[1];
+			register_file(tick, result_register, (cpu.V[0]-cpu.V[1]));
             break;
 
         /*or operation*/
         case 0x4:
-            cpu.V[result_register] = cpu.V[0]|cpu.V[1];
+			register_file(tick, result_register, (cpu.V[0]|cpu.V[1]));
             break;
 
         /*and operation*/
         case 0x5:
-            cpu.V[result_register] = cpu.V[0]&cpu.V[1];
+			register_file(tick, result_register, (cpu.V[0]&cpu.V[1]));
             break;
 
         /*wtf happened*/

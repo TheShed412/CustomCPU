@@ -15,8 +15,8 @@ typedef struct {
     unsigned short instructions[1000];      /*ROM for holding instructions. 16-bit instruction set*/
 } ROM;
 
-void alu(word, word, word);
 void register_file(word tick, word reg_write, word input);
+void alu(word, word, word, word);
 void splitter(word, word*);
 
 #endif
