@@ -8,28 +8,37 @@ static void copy_to_rom(word* to_rom, int size);
 CPU cpu;
 ROM rom;
 
+/*
+	This will take a file for the input that has the ROM instructions on it.
+	At the top of the file should be the number of instructions in the
+	file.
+*/
+
 int main(int argc, char const *argv[]) {
 	/*PC will just be the index for the ROM*/
+	FILE* input = fopen(argv[1], "r");
+	int size = 0;
 
-	word instructions[] = {
-		0x45,	/*load 69 in to A*/
-		0x801,  /*load 1 in to B*/
-		0x2800, /*add what's in A and B, store in B*/
-	};
-
-	copy_to_rom(instructions, TEST);
-
-	word split_ins[3];
-
-	int i;
-	for(i=0; i<TEST; i++){
-		splitter(rom.instructions[i], split_ins);
-		alu(0, split_ins[1], split_ins[2], split_ins[0]);
+	if(input){
+		size = (fgetc(input)-48);
+		printf("%d\n", size);
+	} else {
+		fprintf(stderr, "%s\n", "FILE COULD NOT OPEN");
+		return 1;
 	}
 
-	printf("A: %d\n", cpu.V[0]);
-	printf("B: %d\n", cpu.V[1]);
+	// word split_ins[3];
+	//
+	// int i;
+	// for(i=0; i<TEST; i++){
+	// 	splitter(rom.instructions[i], split_ins);
+	// 	alu(0, split_ins[1], split_ins[2], split_ins[0]);
+	// }
+	//
+	// printf("A: %d\n", cpu.V[0]);
+	// printf("B: %d\n", cpu.V[1]);
 
+	fclose(input);
     return 0;
 }
 
