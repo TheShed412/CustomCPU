@@ -45,12 +45,23 @@ static void copy_to_rom(FILE* ins_file)
 {
 	char c_ins[32];
 	int size = 0;
+	int temp = 0;
 
 	while(fgets(c_ins, sizeof(c_ins), ins_file)){
+		/*strtok to get rid of \n and sscanf to make it an integer
+		  since it's exsitence is temporary anyways I dont care about it
+		  I let it die in sscanf. What a cruel god I am.*/
 		strtok(c_ins, "\n");
-		printf("%s\n", c_ins);
+		sscanf(c_ins, "%x", &temp);
+		rom.instructions[size] = temp;
 		size++;
 	}//while
+
+	/*Test loop*/
+	// int i;
+	// for(i=0; i<size; i++){
+	// 	printf("%x\n", rom.instructions[i]);
+	// }
 }//copy_to_rom
 
 
