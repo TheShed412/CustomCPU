@@ -3,7 +3,7 @@
 #include "my_cpu.h"
 #define TEST 3
 
-static void copy_to_rom(FILE* to_rom, int size);
+static void copy_to_rom(FILE* to_rom);
 
 CPU cpu;
 ROM rom;
@@ -17,11 +17,9 @@ ROM rom;
 int main(int argc, char const *argv[]) {
 	/*PC will just be the index for the ROM*/
 	FILE* input = fopen(argv[1], "r");
-	int size = 0;
 
 	if(input){
-		size = (fgetc(input)-48); /*changing from char to int*/
-		copy_to_rom(input, size); /*getting the instructions in ROM*/
+		copy_to_rom(input); /*getting the instructions in ROM*/
 	} else {
 		fprintf(stderr, "%s\n", "FILE COULD NOT OPEN");
 		return 1;
@@ -43,12 +41,15 @@ int main(int argc, char const *argv[]) {
 }
 
 
-static void copy_to_rom(FILE* ins_file, int size)
+static void copy_to_rom(FILE* ins_file)
 {
 	char c_ins[32];
+	int size = 0;
 
 	while(fgets(c_ins, sizeof(c_ins), ins_file)){
+		strtok(c_ins, "\n");
 		printf("%s\n", c_ins);
+		size++;
 	}//while
 }//copy_to_rom
 
