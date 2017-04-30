@@ -5,10 +5,10 @@
 
 typedef struct {
     unsigned short  opcode;             /*the current opcode*/
-    unsigned char   memory[4096];       /*ram 4k ;)*/
+    unsigned char   memory[4096];       /*ram 4k...I don't really use this yet*/
     unsigned char   V[2];               /*registers*/
     unsigned short  pc;                 /*program counter*/
-    unsigned char   _clock;             /*clock triggered at 0, runs at 60hz*/
+    unsigned char   _clock;             /*clock triggered at 0, runs at 1mhz*/
 } CPU;
 
 typedef struct {

@@ -4,6 +4,8 @@
 #define TEST 3
 
 static void copy_to_rom(FILE* to_rom);
+static void cpu_run_loop(); /*the main loop*/
+static void emulate_cycle(); /*emulates a single cycle of the cpu*/
 
 CPU cpu;
 ROM rom;
@@ -20,12 +22,13 @@ int main(int argc, char const *argv[]) {
 
 	if(input){
 		copy_to_rom(input); /*getting the instructions in ROM*/
+		cpu_run_loop();
 	} else {
 		fprintf(stderr, "%s\n", "FILE COULD NOT OPEN");
 		return 1;
 	}
 
-	// word split_ins[3];
+	/*// word split_ins[3];
 	//
 	// int i;
 	// for(i=0; i<TEST; i++){
@@ -34,11 +37,35 @@ int main(int argc, char const *argv[]) {
 	// }
 	//
 	// printf("A: %d\n", cpu.V[0]);
-	// printf("B: %d\n", cpu.V[1]);
+	// printf("B: %d\n", cpu.V[1]);*/
 
 	fclose(input);
     return 0;
 }
+
+static void cpu_run_loop()
+{
+	cpu.pc 		= 0;
+	cpu._clock 	= 0;
+	cpu.opcode	= 0;
+
+	while(1){
+		if(!cpu._clock) emulate_cycle(); /*where shit goes down*/
+	}
+}/*cpu_run_loop*/
+
+static void emulate_cycle()
+{
+	/*get opcode*/
+	cpu.opcode = rom.instructions[cpu.pc];
+	cpu.pc++;
+	/*decode opcode*/
+	word split[3];
+	splitter(cpu.opcode, split);
+	/*execute opcode*/
+	alu(0, split[1], split[2], split[0]);
+	/*update clock*/
+}/*emulate_cycle*/
 
 
 static void copy_to_rom(FILE* ins_file)
