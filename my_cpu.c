@@ -52,6 +52,7 @@ static void cpu_run_loop()
 
 	while(1){
 		if(!cpu._clock) emulate_cycle(tick_tock); /*where shit goes down*/
+		//printf("%li\n", tick_tock);
 		tick_tock++;
 	}
 }/*cpu_run_loop*/
@@ -59,13 +60,18 @@ static void cpu_run_loop()
 static void emulate_cycle(unsigned long tick_tock)
 {
 	/*get opcode*/
-	cpu.opcode = rom.instructions[cpu.pc];
-	cpu.pc++;
-	/*decode opcode*/
+	word operate = ((word)tick_tock % 20000);
 	word split[3];
-	splitter(cpu.opcode, split);
+	//printf("%d\n", operate);
+	if(operate==0){
+		cpu.opcode = rom.instructions[cpu.pc];
+		cpu.pc++;
+		/*decode opcode*/
+		printf("%x\n", cpu.opcode);
+		splitter(cpu.opcode, split);
+	}
 	/*execute opcode*/
-	alu((word)tick_tock % 20000, split[1], split[2], split[0]);
+	alu(operate, split[1], split[2], split[0]);
 	/*update clock*/
 }/*emulate_cycle*/
 
@@ -131,7 +137,6 @@ opcode - what the operation will be
 */
 void alu(word tick, word result_register, word immediate, word opcode)
 {
-
     switch (opcode) {
         /*Set operation. reg_2 will be an immediate*/
         case 0x0:
@@ -167,7 +172,8 @@ void alu(word tick, word result_register, word immediate, word opcode)
 
 void register_file(word tick, word reg_write, word input)
 {
-    if(!tick){
+    if(tick==0){
+		//printf("%s\n", "REG");
         cpu.V[reg_write] = input;
     }/*checks for the down tick ie tick = 0*/
 
