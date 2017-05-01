@@ -5,7 +5,7 @@
 
 static void copy_to_rom(FILE* to_rom);
 static void cpu_run_loop(); /*the main loop*/
-static void emulate_cycle(); /*emulates a single cycle of the cpu*/
+static void emulate_cycle(unsigned long); /*emulates a single cycle of the cpu*/
 
 CPU cpu;
 ROM rom;
@@ -48,13 +48,15 @@ static void cpu_run_loop()
 	cpu.pc 		= 0;
 	cpu._clock 	= 0;
 	cpu.opcode	= 0;
+	unsigned long tick_tock = 0;
 
 	while(1){
-		if(!cpu._clock) emulate_cycle(); /*where shit goes down*/
+		if(!cpu._clock) emulate_cycle(tick_tock); /*where shit goes down*/
+		tick_tock++;
 	}
 }/*cpu_run_loop*/
 
-static void emulate_cycle()
+static void emulate_cycle(unsigned long tick_tock)
 {
 	/*get opcode*/
 	cpu.opcode = rom.instructions[cpu.pc];
@@ -63,7 +65,7 @@ static void emulate_cycle()
 	word split[3];
 	splitter(cpu.opcode, split);
 	/*execute opcode*/
-	alu(0, split[1], split[2], split[0]);
+	alu((word)tick_tock % 20000, split[1], split[2], split[0]);
 	/*update clock*/
 }/*emulate_cycle*/
 
