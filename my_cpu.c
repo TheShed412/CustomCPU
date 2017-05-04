@@ -123,6 +123,17 @@ void splitter(word curr_instruct, word* parts)
 }/*splitter*/
 
 /*
+	This will be what runs when the load and store instructions ar runs
+
+	the memory is 4k and just a single array of chars.
+*/
+
+void load_or_store()
+{
+
+}
+
+/*
 Decided to emmulate the alu from my old lab exactly.
 
 Takes three args:
