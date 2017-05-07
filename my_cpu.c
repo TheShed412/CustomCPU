@@ -71,7 +71,10 @@ static void emulate_cycle(unsigned long tick_tock)
 		splitter(cpu.opcode, split);
 	}
 	/*execute opcode*/
-	alu(operate, split[1], split[2], split[0]);
+	if(split[0] == 0x8 || split[0] == 0x9)
+		load_or_store(operate, split[1], split[2], /*opcode*/split[0]);
+	else
+		alu(operate, split[1], split[2], /*opcode*/split[0]);
 	/*update clock*/
 }/*emulate_cycle*/
 
