@@ -123,15 +123,31 @@ void splitter(word curr_instruct, word* parts)
 }/*splitter*/
 
 /*
-	This will be what runs when the load and store instructions ar runs
-
+	This will be what runs when the load and store instructions are run
 	the memory is 4k and just a single array of chars.
+
+	read_register will be the register to read from, the other will be the store
+
+	immediate will be the offset of the read_register
+
+	lw will load whatever is in memory at used_register+immediate in to the
+	other register
+
+	sw will store whatever is in used_register at he other register+immediate
 */
 
-void load_or_store()
+void load_or_store(word tick, word used_register, word immediate, word opcode)
 {
+	switch (opcode) {
+		/*load*/
+		case 0x8:
+		break;
 
-}
+		/*store*/
+		case 0x9:
+		break;
+	}/*switch*/
+}/*load_or_store*/
 
 /*
 Decided to emmulate the alu from my old lab exactly.

@@ -18,6 +18,6 @@ typedef struct {
 void register_file(word tick, word reg_write, word input);
 void alu(word, word, word, word);
 void splitter(word, word*);
-void load_or_store();
+void load_or_store(word, word, word, word);
 
 #endif
