@@ -71,6 +71,11 @@ static void emulate_cycle(unsigned long tick_tock)
 		splitter(cpu.opcode, split);
 	}
 	/*execute opcode*/
+
+	if(split[0] == 0xF) exit(0); /*everything ran successfully*/
+
+	//printf("%d\n", split[0]);
+
 	if(split[0] == 0x8 || split[0] == 0x9)
 		load_or_store(operate, split[1], split[2], /*opcode*/split[0]);
 	else
