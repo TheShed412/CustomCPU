@@ -133,18 +133,25 @@ void splitter(word curr_instruct, word* parts)
 	lw will load whatever is in memory at used_register+immediate in to the
 	other register
 
-	sw will store whatever is in used_register at he other register+immediate
+	sw will store whatever is in used_register at the other_register+immediate
 */
 
 void load_or_store(word tick, word used_register, word immediate, word opcode)
 {
+	word reg_imm = 0; /*this will be the thing stored in the register plus the imm*/
+	word other_reg = !used_register; /*the other register*/
+
 	switch (opcode) {
 		/*load*/
 		case 0x8:
+		reg_imm = cpu.V[used_register] + immediate;// index of the memory I want
+		register_file(tick, other_reg, cpu.memory[reg_imm]);
 		break;
 
 		/*store*/
 		case 0x9:
+		reg_imm = cpu.V[other_reg] + immediate;
+		register_file(tick, used_register, cpu.memory[reg_imm]);
 		break;
 	}/*switch*/
 }/*load_or_store*/
