@@ -11,9 +11,13 @@ CPU cpu;
 ROM rom;
 
 /*
-	This will take a file for the input that has the ROM instructions on it.
-	At the top of the file should be the number of instructions in the
-	file.
+	TODO:
+	1) Make seperate CPU FILE
+	2) Add more registers
+	3) jump
+	4) beq bne
+	5) make assembler in java
+	6) make stack pointer (not in register array)
 */
 
 int main(int argc, char const *argv[]) {
