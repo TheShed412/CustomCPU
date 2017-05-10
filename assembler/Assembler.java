@@ -9,6 +9,11 @@ public class Assembler
 	*/
 	public static void main(String[] args)
 	{
-		
+		int op = 0x2000;
+		int reg = 0x800;
+
+		Instruction in = new Instruction(op, reg, 0);
+
+		System.out.println(in.toHex());
 	}
 }//classs

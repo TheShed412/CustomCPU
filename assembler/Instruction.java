@@ -9,7 +9,7 @@ public class Instruction
 		The instructions will be similar to x86
 	*/
 
-	public Instruction (int op, int reg,+++++ int imm)
+	public Instruction (int op, int reg, int imm)
 	{
 		opcode 		= op;
 		register	= reg;
