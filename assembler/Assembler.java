@@ -46,10 +46,41 @@ public class Assembler
 	private static void translate(String[] assembly)
 	{
 		int op = getOpcode(assembly[0]);
+		System.out.println(String.format("0x%04X", op));
 	}//translate
 
 	private static int getOpcode(String assOp)
 	{
-		return 0;
+		int machineOp = -1;
+		switch(assOp){
+			case "set":
+				machineOp = 0x0;
+			break;
+
+			case "add":
+				machineOp =	0x2000;
+			break;
+
+			case "sub":
+				machineOp =	0x3000;
+			break;
+
+			case "or":
+				machineOp =	0x4000;
+			break;
+
+			case "and":
+				machineOp =	0x5000;
+			break;
+
+			case "lm":
+				machineOp =	0x8000;
+			break;
+
+			case "sm":
+				machineOp =	0x9000;
+			break;
+		}
+		return machineOp;
 	}
 }//classs
