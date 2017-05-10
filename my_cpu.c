@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "my_cpu.h"
-#define TEST 3
-
 
 CPU cpu;
 ROM rom;
