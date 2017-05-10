@@ -36,8 +36,20 @@ public class Assembler
 			String instruction;
 			while ((instruction = buffAss.readLine()) != null){
 				//stuff happens
+				String[] parts = instruction.split(" ");// get the parts that will translate to machine code
+				translate(parts);
 			}//while
 			assFileReader.close();
 		} catch(Exception e){e.printStackTrace();}
 	}//main
+
+	private static void translate(String[] assembly)
+	{
+		int op = getOpcode(assembly[0]);
+	}//translate
+
+	private static int getOpcode(String assOp)
+	{
+		return 0;
+	}
 }//classs
