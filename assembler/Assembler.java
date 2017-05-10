@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Assembler
 {
 	/*
@@ -6,14 +11,33 @@ public class Assembler
 		op r1 imm
 
 		the imm will only be there if r2 is a memory address and imm is the offset.
+
+		operations:
+		set
+		add
+		sub
+		or
+		and
+		lm (load from memory)
+		sm (store to memory)
+		beq (NA)
+		bne (NA)
+		jmp (NA)
+		fnc (NA)
 	*/
 	public static void main(String[] args)
 	{
-		int op = 0x2000;
-		int reg = 0x800;
-
-		Instruction in = new Instruction(op, reg, 0);
-
-		System.out.println(in.toHex());
-	}
+		try{
+			String fileName = args[0];
+			File assFile = new File(fileName);
+			FileReader assFileReader = new FileReader(assFile);
+			BufferedReader buffAss = new BufferedReader(assFileReader);
+			//StringBuffer strBuff = new StringBuffer();
+			String instruction;
+			while ((instruction = buffAss.readLine()) != null){
+				//stuff happens
+			}//while
+			assFileReader.close();
+		} catch(Exception e){e.printStackTrace();}
+	}//main
 }//classs
