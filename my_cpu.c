@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "my_cpu.h"
 
-CPU cpu;
-ROM rom;
 
 /*
 	All of these need to take a ROM and/or a CPU pointer now.
@@ -45,7 +43,7 @@ void splitter(word curr_instruct, word* parts)
 	sw will store whatever is in used_register at the other_register+immediate
 */
 
-void load_or_store(word tick, word used_register, word immediate, word opcode)
+void load_or_store(word tick, word used_register, word immediate, word opcode, CPU* cpu)
 {
 	word reg_imm = 0; /*this will be the thing stored in the register plus the imm*/
 	word other_reg = !used_register; /*the other register*/
@@ -53,14 +51,14 @@ void load_or_store(word tick, word used_register, word immediate, word opcode)
 	switch (opcode) {
 		/*load*/
 		case 0x8:
-		reg_imm = cpu.V[used_register] + immediate;// index of the memory I want
-		register_file(tick, other_reg, cpu.memory[reg_imm]);
+		reg_imm = cpu->V[used_register] + immediate;// index of the memory I want
+		register_file(tick, other_reg, cpu->memory[reg_imm], cpu);
 		break;
 
 		/*store*/
 		case 0x9:
-		reg_imm = cpu.V[other_reg] + immediate;
-		register_file(tick, used_register, cpu.memory[reg_imm]);
+		reg_imm = cpu->V[other_reg] + immediate;
+		register_file(tick, used_register, cpu->memory[reg_imm], cpu);
 		break;
 	}/*switch*/
 }/*load_or_store*/
@@ -78,32 +76,32 @@ immediate - if the operation takes an immediate value,
 
 opcode - what the operation will be
 */
-void alu(word tick, word result_register, word immediate, word opcode)
+void alu(word tick, word result_register, word immediate, word opcode, CPU* cpu)
 {
     switch (opcode) {
         /*Set operation. reg_2 will be an immediate*/
         case 0x0:
-			register_file(tick, result_register, immediate);
+			register_file(tick, result_register, immediate, cpu);
             break;
 
         /*Add operation*/
         case 0x2:
-			register_file(tick, result_register, (cpu.V[0]+cpu.V[1]));
+			register_file(tick, result_register, (cpu->V[0]+cpu->V[1]), cpu);
             break;
 
         /*Subtraction operation*/
         case 0x3:
-			register_file(tick, result_register, (cpu.V[0]-cpu.V[1]));
+			register_file(tick, result_register, (cpu->V[0]-cpu->V[1]), cpu);
             break;
 
         /*or operation*/
         case 0x4:
-			register_file(tick, result_register, (cpu.V[0]|cpu.V[1]));
+			register_file(tick, result_register, (cpu->V[0]|cpu->V[1]), cpu);
             break;
 
         /*and operation*/
         case 0x5:
-			register_file(tick, result_register, (cpu.V[0]&cpu.V[1]));
+			register_file(tick, result_register, (cpu->V[0]&cpu->V[1]), cpu);
             break;
 
         /*wtf happened*/
@@ -113,11 +111,11 @@ void alu(word tick, word result_register, word immediate, word opcode)
 
 }/*alu*/
 
-void register_file(word tick, word reg_write, word input)
+void register_file(word tick, word reg_write, word input, CPU* cpu)
 {
     if(tick==0){
 		//printf("%s\n", "REG");
-        cpu.V[reg_write] = input;
+        cpu->V[reg_write] = input;
     }/*checks for the down tick ie tick = 0*/
 
 }/*register_file*/
