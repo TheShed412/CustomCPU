@@ -13,7 +13,7 @@ ROM rom;
 
 /*
 	TODO:
-	1) Make seperate CPU FILE
+	1) Make seperate CPU FILE (kinda done)
 	2) Add more registers
 	3) jump
 	4) beq bne
