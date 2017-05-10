@@ -2,19 +2,24 @@
 public class Instruction
 {
 	int opcode;
-	int registerResult;
-	int registerFrom;
+	int register;
 	int immediate;
 
 	/*
 		The instructions will be similar to x86
 	*/
 
-	public Instruction (String strOp, String strReg1, String strReg2, String strImm)
+	public Instruction (int op, int reg,+++++ int imm)
 	{
-		opcode 			= Integer.parseInt(strOp);
-		registerResult 	= Integer.parseInt(strReg1);
-		registerFrom	= Integer.parseInt(strReg2);
-		immediate		= Integer.parseInt(strImm);
+		opcode 		= op;
+		register	= reg;
+		immediate	= imm;
 	}//constructor
+
+	public String toHex()
+	{
+		int machineInt = opcode+register+immediate;
+
+		return String.format("0x%04X", machineInt);
+	}
 }//Instruction
