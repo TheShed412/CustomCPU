@@ -7,10 +7,16 @@ public class Assembler
 {
 	/*
 		I want the instructions to be similar to x86:
-		op r1 r2 imm*
-		op r1 imm
-
-		the imm will only be there if r2 is a memory address and imm is the offset.
+		memory operations:
+		op r1 r2 imm
+			r1 will be the register I save in/load from
+			r2 will be the memory address
+			imm will be the offset
+		
+		alu operations:
+		op r1 r2/imm
+			r1 will be the register the result is stored in
+			r2 will be the thing that is added, can also be immediate
 
 		operations:
 		set
@@ -28,17 +34,20 @@ public class Assembler
 	public static void main(String[] args)
 	{
 		try{
+			//just setting up file stuff...
 			String fileName = args[0];
 			File assFile = new File(fileName);
 			FileReader assFileReader = new FileReader(assFile);
 			BufferedReader buffAss = new BufferedReader(assFileReader);
-			//StringBuffer strBuff = new StringBuffer();
+			//don't mind...it's just java being java...
+
 			String instruction;
 			while ((instruction = buffAss.readLine()) != null){
 				//stuff happens
 				String[] parts = instruction.split(" ");// get the parts that will translate to machine code
 				translate(parts);
 			}//while
+
 			assFileReader.close();
 		} catch(Exception e){e.printStackTrace();}
 	}//main
@@ -46,7 +55,12 @@ public class Assembler
 	private static void translate(String[] assembly)
 	{
 		int op = getOpcode(assembly[0]);
-		System.out.println(String.format("0x%04X", op));
+
+		if(op<0x8000){ //if it's an alu operation
+			
+		} else { // else it's a memory operation
+
+		}
 	}//translate
 
 	private static int getOpcode(String assOp)
@@ -54,7 +68,7 @@ public class Assembler
 		int machineOp = -1;
 		switch(assOp){
 			case "set":
-				machineOp = 0x0;
+				machineOp = 0x0000;
 			break;
 
 			case "add":
@@ -82,5 +96,5 @@ public class Assembler
 			break;
 		}
 		return machineOp;
-	}
+	}//getOpCode
 }//classs
