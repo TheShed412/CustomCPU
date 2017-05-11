@@ -45,22 +45,44 @@ public class Assembler
 			while ((instruction = buffAss.readLine()) != null){
 				//stuff happens
 				String[] parts = instruction.split(" ");// get the parts that will translate to machine code
-				translate(parts);
+				Instruction ins = translate(parts);
 			}//while
 
 			assFileReader.close();
 		} catch(Exception e){e.printStackTrace();}
 	}//main
 
-	private static void translate(String[] assembly)
+	private static Instruction translate(String[] assembly)
 	{
-		int op = getOpcode(assembly[0]);
+		// 0000 00 00 00000000
+		// op   r1 r2 imm
+		// registers will be prefaced with an r
+		int op 	= getOpcode(assembly[0]);
+		int r2	= 0;
+		int r1 = 0;
+		int imm = 0;
+
+		String r1Str 	= assembly[1];
+		String r2imm = assembly[2];	// Can be immediate or the second register
+		String immStr	= assembly[3];
 
 		if(op<0x8000){ //if it's an alu operation
-			
-		} else { // else it's a memory operation
+			if (r2imm.substring(0,1).equals("r")){	// if the first char is r, tis a register
 
+				r2imm = r2imm.substring(1);
+				r2 = Integer.parseInt(r2imm);
+			} else { //else its an immediate
+
+				imm = Integer.parseInt(r2imm);
+			}//if else
+
+		} else { // else it's a memory operation
+			r2imm = r2imm.substring(1);
+			r2 = Integer.parseInt(r2imm);
+			imm = Integer.parseInt(immStr);
 		}
+
+		return new Instruction(op, r1, r2, imm);
 	}//translate
 
 	private static int getOpcode(String assOp)
