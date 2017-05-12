@@ -13,8 +13,8 @@ public class Instruction
 	public Instruction (int op, int reg1, int reg2, int imm)
 	{
 		opcode 		= op;
-		register1	= reg1;
-		register2	= reg2;
+		register1	= reg1<<10;
+		register2	= reg2<<8;
 		immediate	= imm;
 	}//constructor
 

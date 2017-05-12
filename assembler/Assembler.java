@@ -54,6 +54,7 @@ public class Assembler
 				writeMach.println(ins.toHex());
 			}//while
 
+			writeMach.println("0xF000");//command to stop cpu. Should be at the end of each file
 			assFileReader.close();
 			writeMach.close();
 		} catch(Exception e){e.printStackTrace();}
@@ -71,19 +72,23 @@ public class Assembler
 
 		String r1Str 	= assembly[1];
 		String r2imm = assembly[2];	// Can be immediate or the second register
-		String immStr	= assembly[3];
+		String immStr	= "";
+
+		r1Str = r1Str.substring(1);
+		r1 = Integer.parseInt(r1Str);
 
 		if(op<0x8000){ //if it's an alu operation
 			if (r2imm.substring(0,1).equals("r")){	// if the first char is r, tis a register
-
 				r2imm = r2imm.substring(1);
 				r2 = Integer.parseInt(r2imm);
+				//System.out.println(r2);
 			} else { //else its an immediate
 
 				imm = Integer.parseInt(r2imm);
 			}//if else
 
 		} else { // else it's a memory operation
+			immStr = assembly[3];
 			r2imm = r2imm.substring(1);
 			r2 = Integer.parseInt(r2imm);
 			imm = Integer.parseInt(immStr);
