@@ -111,6 +111,8 @@ void alu(word tick, word reg1, word reg2, word immediate, word opcode, CPU* cpu)
         /*wtf happened*/
         default:
             printf("%s\n", "not supported operation");
+			printf("%x", opcode);
+			exit(1);
     }/*switch*/
 
 }/*alu*/
