@@ -16,17 +16,22 @@ void splitter(word curr_instruct, word* parts)
 	/*
 		TODO: split the thing into:
 		parts[0]: opcode (bits 15-12)
-		parts[1]: register (bit 11)
-		parts[2]: immediate (bits 7-0)
+		parts[1]: register1 (bits 11-10)
+		parts[2]: register2 (bits 9-8)
+		parts[3]: immediate (bits 7-0)
 	*/
 
+	/*and them to get the right values*/
 	word opcode = curr_instruct & 0xF000;
-	word reg	= curr_instruct & 0x800;
+	word reg1	= curr_instruct & 0xC00;
+	word reg2	= curr_instruct & 0x300;
 	word imm 	= curr_instruct & 0xFF;
 
+	/*shift to make it easier*/	
 	parts[0] = opcode >> 12;
-	parts[1] = reg >> 11;
-	parts[2] = imm;
+	parts[1] = reg1 >> 10;
+	parts[2] = reg2 >> 8;
+	parts[3] = imm;
 }/*splitter*/
 
 /*

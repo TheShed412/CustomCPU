@@ -1,6 +1,8 @@
 #ifndef TAN_CPU
 #define TAN_CPU
-#define word unsigned short     /*Because I use it a lot and I'm tired of typing
+
+#define word unsigned short
+ /*Because I use it a lot and I'm tired of typing
                                   all of the words :p*/
 
 typedef struct {
