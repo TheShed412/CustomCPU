@@ -48,22 +48,21 @@ void splitter(word curr_instruct, word* parts)
 	sw will store whatever is in used_register at the other_register+immediate
 */
 
-void load_or_store(word tick, word used_register, word immediate, word opcode, CPU* cpu)
+void load_or_store(word tick, word reg1, word reg2, word immediate, word opcode, CPU* cpu)
 {
 	word reg_imm = 0; /*this will be the thing stored in the register plus the imm*/
-	word other_reg = !used_register; /*the other register*/
 
 	switch (opcode) {
 		/*load*/
 		case 0x8:
-		reg_imm = cpu->V[used_register] + immediate;// index of the memory I want
-		register_file(tick, other_reg, cpu->memory[reg_imm], cpu);
+		reg_imm = cpu->V[reg2] + immediate;// index of the memory I want
+		register_file(tick, reg1, cpu->memory[reg_imm], cpu);
 		break;
 
 		/*store*/
 		case 0x9:
-		reg_imm = cpu->V[other_reg] + immediate;
-		register_file(tick, used_register, cpu->memory[reg_imm], cpu);
+		reg_imm = cpu->V[reg1] + immediate;
+		register_file(tick, reg2, cpu->memory[reg_imm], cpu);
 		break;
 	}/*switch*/
 }/*load_or_store*/
