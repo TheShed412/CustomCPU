@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Assembler
 {
@@ -41,14 +42,20 @@ public class Assembler
 			BufferedReader buffAss = new BufferedReader(assFileReader);
 			//don't mind...it's just java being java...
 
+			String machineFile = fileName.substring(0, (fileName.length()-3) ) + "tan";
+			PrintWriter writeMach = new PrintWriter(machineFile, "UTF-8");
+
 			String instruction;
 			while ((instruction = buffAss.readLine()) != null){
 				//stuff happens
 				String[] parts = instruction.split(" ");// get the parts that will translate to machine code
 				Instruction ins = translate(parts);
+
+				writeMach.println(ins.toHex());
 			}//while
 
 			assFileReader.close();
+			writeMach.close();
 		} catch(Exception e){e.printStackTrace();}
 	}//main
 
