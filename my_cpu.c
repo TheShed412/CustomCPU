@@ -80,32 +80,32 @@ immediate - if the operation takes an immediate value,
 
 opcode - what the operation will be
 */
-void alu(word tick, word result_register, word immediate, word opcode, CPU* cpu)
+void alu(word tick, word reg1, word reg2, word immediate, word opcode, CPU* cpu)
 {
     switch (opcode) {
         /*Set operation. reg_2 will be an immediate*/
         case 0x0:
-			register_file(tick, result_register, immediate, cpu);
+			register_file(tick, reg1, immediate, cpu);
             break;
 
         /*Add operation*/
         case 0x2:
-			register_file(tick, result_register, (cpu->V[0]+cpu->V[1]), cpu);
+			register_file(tick, reg1, (cpu->V[reg1]+cpu->V[reg2]), cpu);
             break;
 
         /*Subtraction operation*/
         case 0x3:
-			register_file(tick, result_register, (cpu->V[0]-cpu->V[1]), cpu);
+			register_file(tick, reg1, (cpu->V[reg1]-cpu->V[reg2]), cpu);
             break;
 
         /*or operation*/
         case 0x4:
-			register_file(tick, result_register, (cpu->V[0]|cpu->V[1]), cpu);
+			register_file(tick, reg1, (cpu->V[reg1]|cpu->V[reg2]), cpu);
             break;
 
         /*and operation*/
         case 0x5:
-			register_file(tick, result_register, (cpu->V[0]&cpu->V[1]), cpu);
+			register_file(tick, reg1, (cpu->V[reg1]&cpu->V[reg2]), cpu);
             break;
 
         /*wtf happened*/
