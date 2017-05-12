@@ -14,10 +14,10 @@ ROM rom;
 /*
 	TODO:
 	1) Make seperate CPU FILE (kinda done)
-	2) Add more registers
+	2) Add more registers (done)
 	3) jump
 	4) beq bne
-	5) make assembler in java
+	5) make assembler in java (kinda done)
 	6) make stack pointer (not in register array)
 */
 

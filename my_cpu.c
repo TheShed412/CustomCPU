@@ -29,8 +29,8 @@ void splitter(word curr_instruct, word* parts)
 
 	/*shift to make it easier*/	
 	parts[0] = opcode >> 12;
-	parts[1] = reg1 >> 10;
-	parts[2] = reg2 >> 8;
+	parts[1] = (reg1 >> 10);
+	parts[2] = (reg2 >> 8);
 	parts[3] = imm;
 }/*splitter*/
 
@@ -57,12 +57,15 @@ void load_or_store(word tick, word reg1, word reg2, word immediate, word opcode,
 		case 0x8:
 		reg_imm = cpu->V[reg2] + immediate;// index of the memory I want
 		register_file(tick, reg1, cpu->memory[reg_imm], cpu);
+		printf("load: %d\n", cpu->memory[reg_imm]);
 		break;
 
 		/*store*/
 		case 0x9:
-		reg_imm = cpu->V[reg1] + immediate;
-		register_file(tick, reg2, cpu->memory[reg_imm], cpu);
+		reg_imm = cpu->V[reg2] + immediate;
+		//register_file(tick, reg1, cpu->memory[reg_imm], cpu);
+		cpu->memory[reg_imm] = cpu->V[reg1];
+		printf("store: %d\n", cpu->V[reg1]);
 		break;
 	}/*switch*/
 }/*load_or_store*/
