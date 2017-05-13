@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "my_cpu.h"
 
+static void jump(CPU**, ROM**, word);
 
 /*
 	All of these need to take a ROM and/or a CPU pointer now.
@@ -132,22 +133,33 @@ void jump_ops(word tick, word reg1, word reg2, word imm, word opcode, CPU* cpu, 
 {
 	switch(opcode){
 		/*jump*/
-		case: 0xB
+		case 0xB:
+			jump(&cpu, &rom, imm);
 		break;
 
 		/*beq*/
-		case: 0xF
+		case 0xF:
 		break;
 
 		/*bne*/
-		case: 0x7
+		case 0x7:
 		break;
 
 		/*fnc*/
-		case: 0x6
+		case 0x6:
 		break;
 	}/*switch*/
 }/*jumpops*/
+
+static void jump(CPU** _cpu, ROM** _rom, word index)
+{
+	/*gonna do jump stuff*/
+	CPU* cpu = *_cpu;
+	ROM* rom = *_rom;
+
+	cpu->pc = index;
+	cpu->opcode = rom->instructions[cpu->pc];
+}/*jump*/
 
 void register_file(word tick, word reg_write, word input, CPU* cpu)
 {
