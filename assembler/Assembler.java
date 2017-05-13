@@ -128,7 +128,23 @@ public class Assembler
 			case "sm":
 				machineOp =	0x9000;
 			break;
-		}
+
+			case "jmp":
+				machineOp = 0xB000;
+			break;
+
+			case "beq":
+				machineOp = 0xF000;
+			break;
+
+			case "bne":
+				machineOp = 0x7000;
+			break;
+
+			case "fnc":
+				machineOp = 0x6000;
+			break;
+		}//switch
 		return machineOp;
 	}//getOpCode
 }//classs
