@@ -129,7 +129,7 @@ void alu(word tick, word reg1, word reg2, word immediate, word opcode, CPU* cpu)
 	fnc
 */
 
-void jump_ops(word tick, word reg1, word reg2, word imm, word opcode, CPU* cpu, ROM* rom)
+void jump_ops(word reg1, word reg2, word imm, word opcode, CPU* cpu, ROM* rom)
 {
 	switch(opcode){
 		/*jump*/

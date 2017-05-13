@@ -83,6 +83,8 @@ static void emulate_cycle(unsigned long tick_tock)
 
 	if(split[0] == 0x8 || split[0] == 0x9)
 		load_or_store(operate, split[1], split[2], split[3],/*opcode*/split[0], &cpu);
+	else if (split[0] == 0xB || split[0] == 0xF || split[0] == 0x7 || split[0] == 0x6)
+		jump_ops(split[1], split[2], split[3], split[0], &cpu, &rom);
 	else
 		alu(operate, split[1], split[2], split[3], /*opcode*/split[0], &cpu);
 	/*update clock*/

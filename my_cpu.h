@@ -23,6 +23,6 @@ void register_file(word tick, word reg_write, word input, CPU*);
 void alu(word, word, word, word, word, CPU*);
 void splitter(word, word*);
 void load_or_store(word, word, word, word, word, CPU*);
-void jump_ops(word, word, word, word, word, CPU*, ROM*);
+void jump_ops(word, word, word, word, CPU*, ROM*);
 
 #endif
