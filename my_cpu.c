@@ -120,6 +120,35 @@ void alu(word tick, word reg1, word reg2, word immediate, word opcode, CPU* cpu)
 
 }/*alu*/
 
+/*
+	These will be the commands that jump:
+	beq		
+	bne
+	jmp
+	fnc
+*/
+
+void jump_ops(word tick, word reg1, word reg2, word imm, word opcode, CPU* cpu, ROM* rom)
+{
+	switch(opcode){
+		/*jump*/
+		case: 0xB
+		break;
+
+		/*beq*/
+		case: 0xF
+		break;
+
+		/*bne*/
+		case: 0x7
+		break;
+
+		/*fnc*/
+		case: 0x6
+		break;
+	}/*switch*/
+}/*jumpops*/
+
 void register_file(word tick, word reg_write, word input, CPU* cpu)
 {
     if(tick==0){
