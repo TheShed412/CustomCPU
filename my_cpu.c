@@ -139,13 +139,16 @@ void jump_ops(word tick, word reg1, word reg2, word imm, word opcode, CPU* cpu, 
 
 		/*beq*/
 		case 0xF:
+			if(reg1 == reg2) jump(&cpu, &rom, imm);
 		break;
 
 		/*bne*/
 		case 0x7:
+			if(reg1 != reg2) jump(&cpu, &rom, imm);
 		break;
 
 		/*fnc*/
+		/*ths'll be a bit complicated...*/
 		case 0x6:
 		break;
 	}/*switch*/
