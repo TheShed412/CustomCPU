@@ -77,7 +77,11 @@ public class Assembler
 		r1Str = r1Str.substring(1);
 		r1 = Integer.parseInt(r1Str);
 
-		if(op<0x8000){ //if it's an alu operation
+		boolean aluOp  = (op == 0x0000 || op == 0x2000 || op == 0x3000 || op == 0x4000 || op == 0x5000);
+		boolean memOp  = (op == 0x8000 || op == 0x9000);
+		boolean jumpOP = (op == 0xB000 || op == 0xF000 || op == 0x7000 || op == 0x6000);
+
+		if(aluOp){ //if it's an alu operation
 			if (r2imm.substring(0,1).equals("r")){	// if the first char is r, tis a register
 				r2imm = r2imm.substring(1);
 				r2 = Integer.parseInt(r2imm);
@@ -87,12 +91,23 @@ public class Assembler
 				imm = Integer.parseInt(r2imm);
 			}//if else
 
-		} else { // else it's a memory operation
+		} else if (memOp) { // else it's a memory operation
 			immStr = assembly[3];
 			r2imm = r2imm.substring(1);
 			r2 = Integer.parseInt(r2imm);
 			imm = Integer.parseInt(immStr);
-		}
+		} else if (jumpOP) { //else it's a jump operation
+			// format:
+			// jmp 12		(jumps to line 12)
+			// beq r1 r2 12	(jumps to line 12 if r1 == r2)
+			if (op == 0xB000){
+				imm = Integer.parseInt(assembly[1]);
+			} else {
+				r2imm = r2imm.substring(1);
+				r2 = Integer.parseInt(r2imm);
+				imm = Integer.parseInt(immStr);
+			}
+		}//else if
 
 		return new Instruction(op, r1, r2, imm);
 	}//translate
