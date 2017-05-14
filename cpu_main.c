@@ -26,6 +26,10 @@ int main(int argc, char const *argv[]) {
 	FILE* input = fopen(argv[1], "r");
 
 	if(input){
+		/*set stack and base pointer to top of ram*/
+		cpu.sp = STACK_BASE;
+		cpu.bp = STACK_BASE;
+
 		copy_to_rom(input); /*getting the instructions in ROM*/
 		cpu_run_loop();
 	} else {

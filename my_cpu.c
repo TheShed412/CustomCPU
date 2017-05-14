@@ -148,6 +148,7 @@ void jump_ops(word reg1, word reg2, word imm, word opcode, CPU* cpu, ROM* rom)
 		break;
 
 		/*fnc*/
+		/*fnc (line number?)*/
 		/*ths'll be a bit complicated...*/
 		case 0x6:
 		break;

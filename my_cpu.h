@@ -2,16 +2,19 @@
 #define TAN_CPU
 
 #define word unsigned short
+#define RAM_SIZE 4096
+#define STACK_BASE 4095
  /*Because I use it a lot and I'm tired of typing
                                   all of the words :p*/
 
 typedef struct {
     unsigned short  opcode;             /*the current opcode*/
-    unsigned char   memory[4096];       /*ram 4k*/
+    unsigned char   memory[RAM_SIZE];   /*ram 4k*/
     unsigned char   V[4];               /*registers*/
     unsigned short  bp;                 /*base pointer*/
     unsigned short  sp;                 /*stack pointer*/
     unsigned short  pc;                 /*program counter*/
+    unsigned short  ra;                 /*return address*/
     unsigned char   _clock;             /*clock triggered at 0, runs at 1mhz*/
 } CPU;
 
