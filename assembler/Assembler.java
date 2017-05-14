@@ -71,15 +71,20 @@ public class Assembler
 		int imm = 0;
 
 		String r1Str 	= assembly[1];
-		String r2imm = assembly[2];	// Can be immediate or the second register
+		String r2imm 	= "";	// Can be immediate or the second register
 		String immStr	= "";
 
-		r1Str = r1Str.substring(1);
-		r1 = Integer.parseInt(r1Str);
+		if(assembly.length > 2) r2imm = assembly[2];
+
 
 		boolean aluOp  = (op == 0x0000 || op == 0x2000 || op == 0x3000 || op == 0x4000 || op == 0x5000);
 		boolean memOp  = (op == 0x8000 || op == 0x9000);
 		boolean jumpOP = (op == 0xB000 || op == 0xF000 || op == 0x7000 || op == 0x6000);
+
+		if(!jumpOP){
+			r1Str = r1Str.substring(1);
+			r1 = Integer.parseInt(r1Str);
+		}
 
 		if(aluOp){ //if it's an alu operation
 			if (r2imm.substring(0,1).equals("r")){	// if the first char is r, tis a register
@@ -102,13 +107,15 @@ public class Assembler
 			// beq r1 r2 12	(jumps to line 12 if r1 == r2)
 			if (op == 0xB000){
 				imm = Integer.parseInt(assembly[1]);
+				r1 = 0;
+				r2 = 0;
 			} else {
 				r2imm = r2imm.substring(1);
 				r2 = Integer.parseInt(r2imm);
 				imm = Integer.parseInt(immStr);
 			}
 		}//else if
-
+		
 		return new Instruction(op, r1, r2, imm);
 	}//translate
 

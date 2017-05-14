@@ -3,3 +3,4 @@ set r0 12
 add r0 r2
 set r2 0
 sm r0 r2 0
+jmp 4
