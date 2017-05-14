@@ -3,6 +3,7 @@
 #include "my_cpu.h"
 
 static void jump(CPU**, ROM**, word);
+static void function_jump(word imm, CPU** _cpu, ROM** _rom);
 
 /*
 	All of these need to take a ROM and/or a CPU pointer now.
@@ -151,9 +152,24 @@ void jump_ops(word reg1, word reg2, word imm, word opcode, CPU* cpu, ROM* rom)
 		/*fnc (line number?)*/
 		/*ths'll be a bit complicated...*/
 		case 0x6:
+			function_jump(imm, &cpu, &rom);
 		break;
 	}/*switch*/
 }/*jumpops*/
+
+static void function_jump(word imm, CPU** _cpu, ROM** _rom)
+{
+	/*dereference*/
+	CPU* cpu = *_cpu;
+	ROM* rom = *_rom;
+
+	/*do the pc stuff*/
+	cpu->ra = cpu->pc+1; /*set ra to the next instruction to return to*/
+	cpu->pc = imm; /*set the counter to the line number given*/
+	cpu->opcode = rom->instructions[cpu->pc];
+
+	/*do stack stuff?*/
+}//funtion_jump
 
 static void jump(CPU** _cpu, ROM** _rom, word index)
 {
