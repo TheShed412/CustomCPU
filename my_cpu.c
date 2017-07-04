@@ -159,6 +159,7 @@ void jump_ops(word reg1, word reg2, word imm, word opcode, CPU* cpu, ROM* rom)
 
 static void function_jump(word imm, CPU** _cpu, ROM** _rom)
 {
+	/*Make this more like mips*/
 	/*dereference*/
 	CPU* cpu = *_cpu;
 	ROM* rom = *_rom;
