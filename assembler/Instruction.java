@@ -13,14 +13,14 @@ public class Instruction
 	public Instruction (int op, int reg1, int reg2, int imm)
 	{
 		opcode 		= op;
-		register1	= reg1<<10;
-		register2	= reg2<<8;
+		register1	= reg1 << 10;
+		register2	= reg2 << 8;
 		immediate	= imm;
 	}//constructor
 
 	public String toHex()
 	{
-		int machineInt = opcode+register1+register2+immediate;
+		int machineInt = opcode + register1 + register2 + immediate;
 
 		return String.format("0x%04X", machineInt);
 	}

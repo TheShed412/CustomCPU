@@ -10,5 +10,8 @@ final:	cpu_main.c	my_cpu.c
 static64:	cpu_main.c	my_cpu.c
 	gcc -m64 -static -o my_cpu64 my_cpu.c cpu_main.c
 
+ass:
+	javac assembler/Instruction.java assembler/Assembler.java
+
 clean:
 	rm -f *.o
